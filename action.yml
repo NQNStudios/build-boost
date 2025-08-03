@@ -35,6 +35,10 @@ inputs:
     description: Space-separated list of defines
     required: false
     default: ''
+  extra-flag:
+    description: Extra flag for pip install
+    required: false
+    default: ''
 
 outputs:
   root:
@@ -68,7 +72,7 @@ runs:
         }
 
         $exe, $args = $python
-        & $exe $args -m pip install --user --upgrade --break-system-packages git+https://github.com/mickem/cmake-common.git#egg=cmake-common
+        & $exe $args -m pip install --user --upgrade ${{extra-flag}} git+https://github.com/mickem/cmake-common.git#egg=cmake-common
 
         if ($windows_host) {
             $bin_dir = & $exe $args -c "import sysconfig; print(sysconfig.get_path('scripts', 'nt_user'))"
